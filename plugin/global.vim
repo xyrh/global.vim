@@ -54,16 +54,16 @@ function! s:GtagsCscope()
 	set nocscopeverbose
 	exe s:command
 	set cscopeverbose
-
-	nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR>
-	nmap <C-\>t :cs find g <C-R>=expand("<cword>")<CR>
-	nmap <C-\>r :cs find c <C-R>=expand("<cword>")<CR>
-	nmap <C-\>g :cs find e <C-R>=expand("<cword>")<CR>
 endfunction
 
 autocmd! BufWritePost * call s:GtagsAutoUpdate()
 autocmd! CursorHold * call s:GtagsShowName()
-autocmd! DirChanged * call s:GtagsCscope()
+autocmd! VimEnter * call s:GtagsCscope()
+
+nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR>
+nmap <C-\>t :cs find g <C-R>=expand("<cword>")<CR>
+nmap <C-\>r :cs find c <C-R>=expand("<cword>")<CR>
+nmap <C-\>g :cs find e <C-R>=expand("<cword>")<CR>
 
 let &cpo = s:old_cpo
 let loaded_global_vim = 1

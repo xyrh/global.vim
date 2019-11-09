@@ -34,6 +34,15 @@ function! s:GtagsShowName()
 	endif
 endfunction
 
+function! s:GtagsCscope_GtagsRoot()
+    let cmd = s:global_command . " -pq"
+    let cmd_output = system(cmd)
+    if v:shell_error != 0
+        return ''
+    endif
+    return strpart(cmd_output, 0, strlen(cmd_output) - 1)
+endfunction
+
 function! s:GtagsCscope()
 	let gtagsroot = s:GtagsCscope_GtagsRoot()
 	if gtagsroot == ''

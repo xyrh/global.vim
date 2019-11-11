@@ -60,10 +60,14 @@ autocmd! BufWritePost * call s:GtagsAutoUpdate()
 autocmd! CursorHold * call s:GtagsShowName()
 autocmd! VimEnter * call s:GtagsCscope()
 
-nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR>
-nmap <C-\>t :cs find g <C-R>=expand("<cword>")<CR>
-nmap <C-\>r :cs find c <C-R>=expand("<cword>")<CR>
-nmap <C-\>g :cs find e <C-R>=expand("<cword>")<CR>
+nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap <C-\>i :cs find i <C-R>=expand("<cfile>")<CR><CR>
+nmap <C-\>a :cs find a <C-R>=expand("<cword>")<CR><CR>
 
 let &cpo = s:old_cpo
 let loaded_global_vim = 1

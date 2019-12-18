@@ -18,9 +18,7 @@ endfunction
 
 function! GtagsShowHandler(job, msg)
 	let words = split(a:msg, ':')
-	echohl ModeMsg
-	echo words[-1]
-	echohl None
+	call popup_atcursor(words[-1], {})	
 endfunction
 
 function! s:GtagsAutoUpdate()

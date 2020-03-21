@@ -5,10 +5,7 @@ endif
 let s:old_cpo = &cpo
 set cpo&vim
 
-let s:global_command = $GTAGSGLOBAL
-if s:global_command == ''
-	let s:global_command = 'global'
-endif
+let s:global_command = 'global'
 
 function! GtagsUpdateHandler(job, status)
 	if a:status == 0
@@ -47,11 +44,23 @@ function! s:GtagsCscope()
 		return
 	endif
 
-	set csprg=gtags-cscope
-	let s:command = "cs add " . gtagsroot . "/GTAGS"
-	set nocscopeverbose
-	exe s:command
-	set cscopeverbose
+	silent exe "cs add " . gtagsroot . "/GTAGS"
+endfunction
+
+function! s:GtagsReSetCscope()
+    let cmd = "cd ". fnamemodify(expand('%'), ":p:h").";".s:global_command . " -pq"
+    let cmd_output = system(cmd)
+    if v:shell_error != 0
+        return
+    endif
+
+    let gtagsroot = strpart(cmd_output, 0, strlen(cmd_output) - 1)
+	if gtagsroot == ''
+		return
+	endif
+
+	silent exe "cs kill 0"
+	silent exe "cs add ". gtagsroot . "/GTAGS"
 endfunction
 
 autocmd! BufWritePost * call s:GtagsAutoUpdate()
@@ -66,6 +75,7 @@ nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
 nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
 nmap <C-\>i :cs find i <C-R>=expand("<cfile>")<CR><CR>
 nmap <C-\>a :cs find a <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>r :call <SID>GtagsReSetCscope()<CR>
 
 let &cpo = s:old_cpo
 let loaded_global_vim = 1

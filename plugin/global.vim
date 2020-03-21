@@ -60,7 +60,8 @@ function! s:GtagsReSetCscope()
 	endif
 
 	silent exe "cs kill 0"
-	silent exe "cs add ". gtagsroot . "/GTAGS"
+	call chdir(gtagsroot)
+	silent exe "cs add GTAGS"
 endfunction
 
 autocmd! BufWritePost * call s:GtagsAutoUpdate()
@@ -75,7 +76,7 @@ nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
 nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
 nmap <C-\>i :cs find i <C-R>=expand("<cfile>")<CR><CR>
 nmap <C-\>a :cs find a <C-R>=expand("<cword>")<CR><CR>
-nmap <C-\>r :call <SID>GtagsReSetCscope()<CR>
+nmap <silent> <C-\>r :call <SID>GtagsReSetCscope()<CR>
 
 let &cpo = s:old_cpo
 let loaded_global_vim = 1

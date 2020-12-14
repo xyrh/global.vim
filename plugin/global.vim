@@ -65,7 +65,7 @@ function! s:GtagsReSetCscope()
 endfunction
 
 autocmd! BufWritePost * call s:GtagsAutoUpdate()
-autocmd! CursorHold * call s:GtagsShowName()
+autocmd! CursorHold *.c,*.h call s:GtagsShowName()
 autocmd! VimEnter * call s:GtagsCscope()
 
 nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
